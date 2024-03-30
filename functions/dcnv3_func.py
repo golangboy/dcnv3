@@ -118,7 +118,7 @@ def _get_reference_points(spatial_shapes, device, kernel_h, kernel_w, dilation_h
             (dilation_h * (kernel_h - 1)) // 2 + 0.5,
             (dilation_h * (kernel_h - 1)) // 2 + 0.5 + (H_out - 1) * stride_h,
             H_out,
-            dtype=torch.float32,
+            dtype=torch.float16,
             device=device),
         torch.linspace(
             # pad_w + 0.5,
@@ -126,7 +126,7 @@ def _get_reference_points(spatial_shapes, device, kernel_h, kernel_w, dilation_h
             (dilation_w * (kernel_w - 1)) // 2 + 0.5,
             (dilation_w * (kernel_w - 1)) // 2 + 0.5 + (W_out - 1) * stride_w,
             W_out,
-            dtype=torch.float32,
+            dtype=torch.float16,
             device=device))
     ref_y = ref_y.reshape(-1)[None] / H_
     ref_x = ref_x.reshape(-1)[None] / W_
@@ -145,13 +145,13 @@ def _generate_dilation_grids(spatial_shapes, kernel_h, kernel_w, dilation_h, dil
             -((dilation_w * (kernel_w - 1)) // 2),
             -((dilation_w * (kernel_w - 1)) // 2) + (kernel_w - 1) * dilation_w,
             kernel_w,
-            dtype=torch.float32,
+            dtype=torch.float16,
             device=device),
         torch.linspace(
             -((dilation_h * (kernel_h - 1)) // 2),
             -((dilation_h * (kernel_h - 1)) // 2) + (kernel_h - 1) * dilation_h,
             kernel_h,
-            dtype=torch.float32,
+            dtype=torch.float16,
             device=device))
 
     points_list.extend([x / W_, y / H_])
